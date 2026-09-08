@@ -65,59 +65,158 @@
                     <h2 id="greeting" class="text-primary-custom">Good Morning, User!</h2>
                 </div>
 
-                <!-- Statistic Cards -->
+                <!-- Statistic Cards: original restaurant overview + Lab 4 inventory statistics -->
                 <section class="row mb-4">
-                    <div class="col-md-3 mb-3">
-                        <div class="card stat-card border-primary-custom text-center">
-                            <div class="card-body">
-                                <h5 class="card-title text-muted" id="stat1-title">Daily Orders</h5>
-                                <h2 class="card-text fw-bold text-primary" id="stat1-value">0</h2>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-primary-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat1-title">Daily Orders</h5><h2 class="card-text fw-bold text-primary" id="stat1-value">47</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-success-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat2-title">Revenue</h5><h2 class="card-text fw-bold text-success" id="stat2-value">₱2,450</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-accent text-center h-100"><div class="card-body"><h5 class="card-title text-accent" id="stat3-title">Menu Items</h5><h2 class="card-text fw-bold text-info" id="stat3-value">0</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat4-title">Available Tables</h5><h2 class="card-text fw-bold text-warning" id="stat4-value">8</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-primary-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat5-title">Inventory Items</h5><h2 class="card-text fw-bold text-primary" id="stat5-value">0</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-success-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat6-title">Inventory Value</h5><h2 class="card-text fw-bold text-success" id="stat6-value">₱0.00</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-accent text-center h-100"><div class="card-body"><h5 class="card-title text-accent" id="stat7-title">Low Stock</h5><h2 class="card-text fw-bold text-warning" id="stat7-value">0</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat8-title">Out of Stock</h5><h2 class="card-text fw-bold text-danger" id="stat8-value">0</h2></div></div></div>
+                </section>
+                <!-- Low Stock Alert Banner (Lab 4 Part 5 Step 3) -->
+                <div id="lowStockAlert" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="lowStockAlertText"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Charts Container (Lab 4 Part 4) -->
+                <section class="row mb-4">
+                    <div class="col-lg-5 mb-3">
+                        <div class="card shadow-hover h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">📊 Inventory Value by Category</h5>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="categoryValueChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card stat-card border-success-custom text-center">
-                            <div class="card-body">
-                                <h5 class="card-title text-muted" id="stat2-title">Revenue</h5>
-                                <h2 class="card-text fw-bold text-success" id="stat2-value">$0</h2>
+                    <div class="col-lg-3 mb-3">
+                        <div class="card shadow-hover h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">📦 Stock Status</h5>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="stockStatusChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card stat-card border-accent text-center">
-                            <div class="card-body">
-                                <h5 class="card-title text-accent" id="stat3-title">Menu Items</h5>
-                                <h2 class="card-text fw-bold text-info" id="stat3-value">0</h2>
+                    <div class="col-lg-4 mb-3">
+                        <div class="card shadow-hover h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">🏆 Top 5 Menu Items by Value</h5>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="card stat-card text-center">
-                            <div class="card-body">
-                                <h5 class="card-title text-muted" id="stat4-title">Tables</h5>
-                                <h2 class="card-text fw-bold text-warning" id="stat4-value">0</h2>
+                            <div class="card-body chart-container">
+                                <canvas id="topProductsChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Recent Activity Table -->
+                <!-- Filter Controls (Lab 4 Part 5 Step 1) -->
+                <section class="card mb-3">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label for="categoryFilter" class="form-label small text-muted">Category</label>
+                                <select id="categoryFilter" class="form-select form-select-sm">
+                                    <option value="all">All Categories</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="statusFilter" class="form-label small text-muted">Stock Status</label>
+                                <select id="statusFilter" class="form-select form-select-sm">
+                                    <option value="all">All Statuses</option>
+                                    <option value="In Stock">In Stock</option>
+                                    <option value="Low Stock">Low Stock</option>
+                                    <option value="Out of Stock">Out of Stock</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="priceMinInput" class="form-label small text-muted">Min Price</label>
+                                <input type="number" id="priceMinInput" class="form-control form-control-sm" placeholder="₱ Min">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="priceMaxInput" class="form-label small text-muted">Max Price</label>
+                                <input type="number" id="priceMaxInput" class="form-control form-control-sm" placeholder="₱ Max">
+                            </div>
+                            <div class="col-md-2 d-flex gap-2">
+                                <button id="applyFiltersBtn" class="btn btn-success btn-sm flex-fill">
+                                    <i class="bi bi-funnel"></i> Apply
+                                </button>
+                                <button id="resetFiltersBtn" class="btn btn-outline-secondary btn-sm flex-fill">
+                                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Inventory Activity (Lab 4: Recent Inventory Changes) -->
+                <section class="mb-4">
+                    <div class="card shadow-hover">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">🕒 Recent Inventory Activity</h5>
+                            <span class="small text-muted">Live inventory events</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Activity</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="activityTableBody">
+                                        <!-- Dynamic activity content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Menu Inventory Table -->
                 <section>
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">📋 Recent Orders</h5>
+                        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <h5 class="mb-0">📋 Menu Inventory</h5>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <!-- Search Bar (Lab 4 Part 5 Step 2) -->
+                                <div class="input-group input-group-sm" style="max-width: 220px;">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search name or SKU...">
+                                </div>
+                                <!-- Export Button (Lab 4 Part 3 Step 3) -->
+                                <button id="exportCsvBtn" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-download"></i> Export CSV
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body">
+                            <p id="resultsCount" class="small text-muted mb-2"></p>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr class="border-accent">
-                                            <th>Time</th>
-                                            <th>Order</th>
+                                            <th>SKU</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Qty</th>
+                                            <th>Unit Price</th>
+                                            <th>Total Value</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="activityTableBody">
+                                    <tbody id="menuTableBody">
                                         <!-- Dynamic content -->
                                     </tbody>
                                 </table>
@@ -129,6 +228,24 @@
         </div>
     </div>
 
+    <!-- Adjust Stock Modal (Lab 4 Part 7 write operation) -->
+    <div class="modal fade" id="adjustStockModal" tabindex="-1" aria-labelledby="adjustStockModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="adjustStockModalLabel">Adjust Stock</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body">
+                <p class="mb-2">Product: <strong id="adjustStockProductName">—</strong></p>
+                <p class="small text-muted">SKU: <span id="adjustStockSku">—</span> · Current quantity: <span id="adjustStockCurrent">0</span></p>
+                <label for="adjustStockQuantity" class="form-label">New quantity</label>
+                <input type="number" class="form-control" id="adjustStockQuantity" min="0" step="1" required>
+                <div id="adjustStockError" class="text-danger small mt-2 d-none"></div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary" id="saveStockBtn">Save Stock</button></div>
+        </div></div>
+    </div>
+
+    <!-- Toast container for live update notifications -->
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
     <!-- Footer -->
     <footer class="text-center py-3 bg-light mt-4 border-top">
         <p class="mb-0">&copy; 2026 Restaurant Manager. All rights reserved.</p>
@@ -136,7 +253,12 @@
 
     <!-- Bootstrap 5 JavaScript CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- Custom JavaScript -->
+    <script src="js/dataManager.js"></script>
+    <script src="js/charts.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

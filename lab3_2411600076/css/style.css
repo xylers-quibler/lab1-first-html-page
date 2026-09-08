@@ -105,7 +105,13 @@ body {
 }
 
 /* ===== UTILITY CLASSES ===== */
+.shadow-hover {
+    transition: box-shadow 0.3s ease;
+}
 
+.shadow-hover:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
 
 .border-accent {
     border-left: 4px solid var(--theme-accent);
@@ -142,6 +148,39 @@ body {
     border-color: #151D30;
 }
 
+/* ===== LAB 4: CHARTS ===== */
+.chart-container {
+    position: relative;
+    height: 260px;
+}
+
+/* ===== LAB 4: LOW STOCK / OUT OF STOCK ROW HIGHLIGHTING ===== */
+.row-low-stock {
+    background-color: rgba(243, 167, 18, 0.12) !important;
+}
+
+.row-out-of-stock {
+    background-color: rgba(220, 53, 69, 0.12) !important;
+}
+
+/* ===== LAB 4: REAL-TIME UPDATE FLASH ===== */
+.row-flash {
+    animation: flashRow 1.2s ease;
+}
+
+@keyframes flashRow {
+    0% { background-color: var(--theme-light-accent); }
+    100% { background-color: transparent; }
+}
+
+/* ===== LAB 4: SEARCH HIGHLIGHT ===== */
+mark {
+    background-color: var(--theme-accent);
+    color: var(--theme-text);
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .sidebar {
@@ -151,6 +190,10 @@ body {
 
     .stat-card .card-text {
         font-size: 1.4rem;
+    }
+
+    .chart-container {
+        height: 220px;
     }
 }
 

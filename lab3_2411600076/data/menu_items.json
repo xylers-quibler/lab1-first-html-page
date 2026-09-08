@@ -1,0 +1,114 @@
+[
+    {
+        "id": 1,
+        "sku": "APP-001",
+        "name": "Spring Rolls",
+        "category": "Appetizer",
+        "quantity": 3,
+        "unitPrice": 120
+    },
+    {
+        "id": 2,
+        "sku": "APP-002",
+        "name": "Calamari",
+        "category": "Appetizer",
+        "quantity": 12,
+        "unitPrice": 180
+    },
+    {
+        "id": 3,
+        "sku": "APP-003",
+        "name": "Garlic Bread",
+        "category": "Appetizer",
+        "quantity": 30,
+        "unitPrice": 90
+    },
+    {
+        "id": 4,
+        "sku": "MAIN-001",
+        "name": "Grilled Salmon",
+        "category": "Main Course",
+        "quantity": 7,
+        "unitPrice": 450
+    },
+    {
+        "id": 5,
+        "sku": "MAIN-002",
+        "name": "Beef Steak",
+        "category": "Main Course",
+        "quantity": 16,
+        "unitPrice": 520
+    },
+    {
+        "id": 6,
+        "sku": "MAIN-003",
+        "name": "Chicken Alfredo",
+        "category": "Main Course",
+        "quantity": 34,
+        "unitPrice": 280
+    },
+    {
+        "id": 7,
+        "sku": "MAIN-004",
+        "name": "Margherita Pizza",
+        "category": "Main Course",
+        "quantity": 47,
+        "unitPrice": 320
+    },
+    {
+        "id": 8,
+        "sku": "DES-001",
+        "name": "Chocolate Lava Cake",
+        "category": "Dessert",
+        "quantity": 29,
+        "unitPrice": 150
+    },
+    {
+        "id": 9,
+        "sku": "DES-002",
+        "name": "Cheesecake",
+        "category": "Dessert",
+        "quantity": 28,
+        "unitPrice": 160
+    },
+    {
+        "id": 10,
+        "sku": "DES-003",
+        "name": "Ice Cream Sundae",
+        "category": "Dessert",
+        "quantity": 11,
+        "unitPrice": 110
+    },
+    {
+        "id": 11,
+        "sku": "BEV-001",
+        "name": "Iced Tea",
+        "category": "Beverage",
+        "quantity": 55,
+        "unitPrice": 60
+    },
+    {
+        "id": 12,
+        "sku": "BEV-002",
+        "name": "Fresh Lemonade",
+        "category": "Beverage",
+        "quantity": 13,
+        "unitPrice": 70
+    },
+    {
+        "id": 13,
+        "sku": "BEV-003",
+        "name": "Craft Soda",
+        "category": "Beverage",
+        "quantity": 5,
+        "unitPrice": 85
+    },
+    {
+        "id": 14,
+        "sku": "BEV-004",
+        "name": "House Wine",
+        "category": "Beverage",
+        "quantity": 19,
+        "unitPrice": 220
+    }
+]
