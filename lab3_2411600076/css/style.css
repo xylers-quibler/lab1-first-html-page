@@ -24,7 +24,6 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ===== LOGIN PAGE ===== */
 .login-page {
     background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
     min-height: 100vh;
@@ -42,7 +41,6 @@ body {
     border-bottom: none;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     background-color: #ffffff;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -72,7 +70,7 @@ body {
     color: #dc3545 !important;
 }
 
-/* ===== STAT CARDS ===== */
+
 .stat-card {
     border: none;
     border-radius: 12px;
@@ -104,7 +102,6 @@ body {
     color: var(--theme-primary);
 }
 
-/* ===== UTILITY CLASSES ===== */
 .shadow-hover {
     transition: box-shadow 0.3s ease;
 }
@@ -137,24 +134,24 @@ body {
     color: var(--theme-primary);
 }
 
-/* ===== BUTTONS ===== */
+
 .btn-primary {
     background-color: var(--theme-primary);
     border-color: var(--theme-primary);
 }
 
 .btn-primary:hover {
-    background-color: #151D30;  /* Darker Navy */
+    background-color: #151D30;  
     border-color: #151D30;
 }
 
-/* ===== LAB 4: CHARTS ===== */
+
 .chart-container {
     position: relative;
     height: 260px;
 }
 
-/* ===== LAB 4: LOW STOCK / OUT OF STOCK ROW HIGHLIGHTING ===== */
+
 .row-low-stock {
     background-color: rgba(243, 167, 18, 0.12) !important;
 }

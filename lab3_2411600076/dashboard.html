@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Restaurant Manager</title>
-    <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -42,18 +39,10 @@
             <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar vh-100 p-3">
                 <div class="position-sticky">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Orders</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="#" id="logoutLink">Logout</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link text-danger" href="#" id="logoutLink">Logout</a></li>
                     </ul>
                 </div>
             </nav>
@@ -65,69 +54,67 @@
                     <h2 id="greeting" class="text-primary-custom">Good Morning, User!</h2>
                 </div>
 
-                <!-- Statistic Cards: original restaurant overview + Lab 4 inventory statistics -->
+                <!-- 4 Statistic Cards (matches Lab 3 & Lab 5) -->
                 <section class="row mb-4">
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-primary-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat1-title">Daily Orders</h5><h2 class="card-text fw-bold text-primary" id="stat1-value">47</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-success-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat2-title">Revenue</h5><h2 class="card-text fw-bold text-success" id="stat2-value">₱2,450</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-accent text-center h-100"><div class="card-body"><h5 class="card-title text-accent" id="stat3-title">Menu Items</h5><h2 class="card-text fw-bold text-info" id="stat3-value">0</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat4-title">Available Tables</h5><h2 class="card-text fw-bold text-warning" id="stat4-value">8</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-primary-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat5-title">Inventory Items</h5><h2 class="card-text fw-bold text-primary" id="stat5-value">0</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-success-custom text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat6-title">Inventory Value</h5><h2 class="card-text fw-bold text-success" id="stat6-value">₱0.00</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover border-accent text-center h-100"><div class="card-body"><h5 class="card-title text-accent" id="stat7-title">Low Stock</h5><h2 class="card-text fw-bold text-warning" id="stat7-value">0</h2></div></div></div>
-                    <div class="col-sm-6 col-lg-3 mb-3"><div class="card stat-card shadow-hover text-center h-100"><div class="card-body"><h5 class="card-title text-muted" id="stat8-title">Out of Stock</h5><h2 class="card-text fw-bold text-danger" id="stat8-value">0</h2></div></div></div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="card stat-card shadow-hover border-primary-custom text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted" id="stat1-title">Total Menu Items</h5>
+                                <h2 class="card-text fw-bold text-primary" id="stat1-value">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="card stat-card shadow-hover border-success-custom text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted" id="stat2-title">Inventory Value</h5>
+                                <h2 class="card-text fw-bold text-success" id="stat2-value">₱0.00</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="card stat-card shadow-hover border-accent text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-accent" id="stat3-title">Low Stock</h5>
+                                <h2 class="card-text fw-bold text-warning" id="stat3-value">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="card stat-card shadow-hover text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted" id="stat4-title">Out of Stock</h5>
+                                <h2 class="card-text fw-bold text-danger" id="stat4-value">0</h2>
+                            </div>
+                        </div>
+                    </div>
                 </section>
-                <!-- Low Stock Alert Banner (Lab 4 Part 5 Step 3) -->
+
+                <!-- Low Stock Alert Banner -->
                 <div id="lowStockAlert" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     <span id="lowStockAlertText"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
-                <!-- Charts Container (Lab 4 Part 4) -->
+                <!-- 3 Charts -->
                 <section class="row mb-4">
-                    <div class="col-lg-5 mb-3">
-                        <div class="card shadow-hover h-100">
-                            <div class="card-header">
-                                <h5 class="mb-0">📊 Inventory Value by Category</h5>
-                            </div>
-                            <div class="card-body chart-container">
-                                <canvas id="categoryValueChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 mb-3">
-                        <div class="card shadow-hover h-100">
-                            <div class="card-header">
-                                <h5 class="mb-0">📦 Stock Status</h5>
-                            </div>
-                            <div class="card-body chart-container">
-                                <canvas id="stockStatusChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 mb-3">
-                        <div class="card shadow-hover h-100">
-                            <div class="card-header">
-                                <h5 class="mb-0">🏆 Top 5 Menu Items by Value</h5>
-                            </div>
-                            <div class="card-body chart-container">
-                                <canvas id="topProductsChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-lg-5 mb-3"><div class="card shadow-hover h-100"><div class="card-header"><h5 class="mb-0">📊 Inventory Value by Category</h5></div><div class="card-body chart-container"><canvas id="categoryValueChart"></canvas></div></div></div>
+                    <div class="col-lg-3 mb-3"><div class="card shadow-hover h-100"><div class="card-header"><h5 class="mb-0">📦 Stock Status</h5></div><div class="card-body chart-container"><canvas id="stockStatusChart"></canvas></div></div></div>
+                    <div class="col-lg-4 mb-3"><div class="card shadow-hover h-100"><div class="card-header"><h5 class="mb-0">🏆 Top 5 Menu Items by Value</h5></div><div class="card-body chart-container"><canvas id="topProductsChart"></canvas></div></div></div>
                 </section>
 
-                <!-- Filter Controls (Lab 4 Part 5 Step 1) -->
+                <!-- Filter Controls + Sort -->
                 <section class="card mb-3">
                     <div class="card-body">
                         <div class="row g-3 align-items-end">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="categoryFilter" class="form-label small text-muted">Category</label>
                                 <select id="categoryFilter" class="form-select form-select-sm">
                                     <option value="all">All Categories</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="statusFilter" class="form-label small text-muted">Stock Status</label>
                                 <select id="statusFilter" class="form-select form-select-sm">
                                     <option value="all">All Statuses</option>
@@ -144,19 +131,28 @@
                                 <label for="priceMaxInput" class="form-label small text-muted">Max Price</label>
                                 <input type="number" id="priceMaxInput" class="form-control form-control-sm" placeholder="₱ Max">
                             </div>
+                            <div class="col-md-2">
+                                <label for="sortSelect" class="form-label small text-muted">Sort By</label>
+                                <select id="sortSelect" class="form-select form-select-sm">
+                                    <option value="default">Default</option>
+                                    <option value="name-asc">Name (A–Z)</option>
+                                    <option value="name-desc">Name (Z–A)</option>
+                                    <option value="price-asc">Price (Low → High)</option>
+                                    <option value="price-desc">Price (High → Low)</option>
+                                    <option value="quantity-asc">Quantity (Low → High)</option>
+                                    <option value="quantity-desc">Quantity (High → Low)</option>
+                                    <option value="value-desc">Total Value (High → Low)</option>
+                                </select>
+                            </div>
                             <div class="col-md-2 d-flex gap-2">
-                                <button id="applyFiltersBtn" class="btn btn-success btn-sm flex-fill">
-                                    <i class="bi bi-funnel"></i> Apply
-                                </button>
-                                <button id="resetFiltersBtn" class="btn btn-outline-secondary btn-sm flex-fill">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Reset
-                                </button>
+                                <button id="applyFiltersBtn" class="btn btn-success btn-sm flex-fill"><i class="bi bi-funnel"></i> Apply</button>
+                                <button id="resetFiltersBtn" class="btn btn-outline-secondary btn-sm flex-fill"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Recent Inventory Activity (Lab 4: Recent Inventory Changes) -->
+                <!-- Recent Inventory Activity -->
                 <section class="mb-4">
                     <div class="card shadow-hover">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -166,17 +162,8 @@
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Time</th>
-                                            <th>Activity</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="activityTableBody">
-                                        <!-- Dynamic activity content -->
-                                    </tbody>
+                                    <thead><tr><th>Time</th><th>Activity</th><th>Status</th><th>Action</th></tr></thead>
+                                    <tbody id="activityTableBody"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -189,15 +176,11 @@
                         <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                             <h5 class="mb-0">📋 Menu Inventory</h5>
                             <div class="d-flex gap-2 flex-wrap">
-                                <!-- Search Bar (Lab 4 Part 5 Step 2) -->
                                 <div class="input-group input-group-sm" style="max-width: 220px;">
                                     <span class="input-group-text"><i class="bi bi-search"></i></span>
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search name or SKU...">
                                 </div>
-                                <!-- Export Button (Lab 4 Part 3 Step 3) -->
-                                <button id="exportCsvBtn" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-download"></i> Export CSV
-                                </button>
+                                <button id="exportCsvBtn" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Export CSV</button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -206,19 +189,11 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr class="border-accent">
-                                            <th>SKU</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Qty</th>
-                                            <th>Unit Price</th>
-                                            <th>Total Value</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>SKU</th><th>Name</th><th>Category</th><th>Qty</th>
+                                            <th>Unit Price</th><th>Total Value</th><th>Status</th><th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="menuTableBody">
-                                        <!-- Dynamic content -->
-                                    </tbody>
+                                    <tbody id="menuTableBody"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -228,7 +203,7 @@
         </div>
     </div>
 
-    <!-- Adjust Stock Modal (Lab 4 Part 7 write operation) -->
+    <!-- Adjust Stock Modal -->
     <div class="modal fade" id="adjustStockModal" tabindex="-1" aria-labelledby="adjustStockModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
             <div class="modal-header"><h5 class="modal-title" id="adjustStockModalLabel">Adjust Stock</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -243,19 +218,14 @@
         </div></div>
     </div>
 
-    <!-- Toast container for live update notifications -->
     <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
 
-    <!-- Footer -->
     <footer class="text-center py-3 bg-light mt-4 border-top">
         <p class="mb-0">&copy; 2026 Restaurant Manager. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap 5 JavaScript CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- Custom JavaScript -->
     <script src="js/dataManager.js"></script>
     <script src="js/charts.js"></script>
     <script src="js/dashboard.js"></script>

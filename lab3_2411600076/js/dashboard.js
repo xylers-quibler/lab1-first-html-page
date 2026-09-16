@@ -27,31 +27,28 @@ function updateGreeting(username) {
 }
 
 /**
- * Lab 4: Dashboard statistics are calculated from the current inventory
- * instead of using hardcoded values.
+ * Updates 4 stat cards matching Lab 3 & Lab 5 layout.
  */
 function updateStatistics() {
     if (typeof dataManager === 'undefined') return;
     const products = dataManager.getProducts();
     const stats = dataManager.getStockStatistics(products);
 
-    const overview = [
-        { id: 1, title: 'Daily Orders', value: '47', color: 'text-primary' },
-        { id: 2, title: 'Revenue', value: '₱2,450', color: 'text-success' },
-        { id: 3, title: 'Menu Items', value: String(stats.totalProducts), color: 'text-info' },
-        { id: 4, title: 'Available Tables', value: '8', color: 'text-warning' }
+    const cards = [
+        { id: 1, title: 'Total Menu Items', value: String(stats.totalProducts), color: 'text-primary' },
+        { id: 2, title: 'Inventory Value', value: `₱${stats.totalValue.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`, color: 'text-success' },
+        { id: 3, title: 'Low Stock', value: stats.lowStock, color: 'text-warning' },
+        { id: 4, title: 'Out of Stock', value: stats.outOfStock, color: 'text-danger' }
     ];
-    const inventory = [
-        { id: 5, title: 'Inventory Items', value: stats.totalProducts, color: 'text-primary' },
-        { id: 6, title: 'Inventory Value', value: `₱${stats.totalValue.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`, color: 'text-success' },
-        { id: 7, title: 'Low Stock', value: stats.lowStock, color: 'text-warning' },
-        { id: 8, title: 'Out of Stock', value: stats.outOfStock, color: 'text-danger' }
-    ];
-    [...overview, ...inventory].forEach(stat => {
+
+    cards.forEach(stat => {
         const titleEl = document.getElementById(`stat${stat.id}-title`);
         const valueEl = document.getElementById(`stat${stat.id}-value`);
         if (titleEl) titleEl.textContent = stat.title;
-        if (valueEl) { valueEl.textContent = stat.value; valueEl.className = `card-text fw-bold ${stat.color}`; }
+        if (valueEl) {
+            valueEl.textContent = stat.value;
+            valueEl.className = `card-text fw-bold ${stat.color}`;
+        }
     });
 }
 

@@ -1,25 +1,6 @@
-/**
- * dataManager.js
- * ------------------------------------------------------------------
- * Central data management module for the Restaurant Manager
- * Dashboard (Laboratory Exercise 4).
- *
- * "product" = a menu item. quantity = stock count on hand.
- * unitPrice = price per item. totalValue = quantity * unitPrice.
- * stockStatus = "In Stock" / "Low Stock" / "Out of Stock", derived
- * from quantity vs reorderLevel.
- *
- * Exposes a single global `dataManager` object (module pattern / IIFE)
- * so state lives in one place instead of scattered globals.
- * ------------------------------------------------------------------
- */
-
 const dataManager = (function () {
     'use strict';
 
-    // ---------------------------------------------------------------
-    // Private state
-    // ---------------------------------------------------------------
     let menuItems = [];
 
     let activeFilters = {
@@ -27,17 +8,14 @@ const dataManager = (function () {
         stockStatus: 'all',
         priceMin: null,
         priceMax: null,
-        searchQuery: ''
+        searchQuery: '',
+        sortField: 'default',
+        sortDirection: 'asc'
     };
 
-    const REORDER_LEVEL = 10; // quantity at/below this = Low Stock
+    const REORDER_LEVEL = 10;
     const OUT_OF_STOCK = 0;
 
-    // ---------------------------------------------------------------
-    // Sample "backend" data.
-    // In Part 7 this can be swapped for a fetch() call to api.php
-    // without changing any function signature below.
-    // ---------------------------------------------------------------
     const SAMPLE_MENU_ITEMS = [
         { id: 1, sku: 'APP-001', name: 'Spring Rolls', category: 'Appetizer', quantity: 48, unitPrice: 120 },
         { id: 2, sku: 'APP-002', name: 'Calamari', category: 'Appetizer', quantity: 0, unitPrice: 180 },
@@ -55,18 +33,12 @@ const dataManager = (function () {
         { id: 14, sku: 'BEV-004', name: 'House Wine', category: 'Beverage', quantity: 18, unitPrice: 220 },
     ];
 
-    // ---------------------------------------------------------------
-    // Helpers
-    // ---------------------------------------------------------------
-
     function deriveStatus(quantity) {
         if (quantity <= OUT_OF_STOCK) return 'Out of Stock';
         if (quantity <= REORDER_LEVEL) return 'Low Stock';
         return 'In Stock';
     }
 
-    // Attaches computed fields (stockStatus, reorderLevel, totalValue)
-    // to a raw menu item record.
     function withComputed(item) {
         return {
             ...item,
@@ -76,18 +48,9 @@ const dataManager = (function () {
         };
     }
 
-    // ---------------------------------------------------------------
-    // Step 1: Initialization & basic getters
-    // ---------------------------------------------------------------
-
-    // Part 7: backend endpoint. If api.php isn't deployed/running (e.g.
-    // the page was opened directly via file://, or XAMPP's Apache isn't
-    // started), initializeData() falls back to the bundled sample data
-    // below so the dashboard still works standalone.
     const API_ENDPOINT = 'api.php?action=list';
     const API_TIMEOUT_MS = 2000;
 
-    /** Attempts to fetch the menu items from api.php, with a short timeout. */
     function fetchFromApi() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
@@ -104,12 +67,6 @@ const dataManager = (function () {
             });
     }
 
-    /**
-     * Sets up the initial dataset. Tries api.php first (Part 7); if that
-     * fails for any reason, falls back to the bundled sample data after
-     * a short simulated delay, so the dashboard is never blocked on a
-     * live backend. Either way returns a Promise resolving to the menu items.
-     */
     function initializeData() {
         return fetchFromApi()
             .then(apiItems => {
@@ -127,31 +84,20 @@ const dataManager = (function () {
             });
     }
 
-    /** Returns a shallow copy of the full current menu item list. */
-    function getProducts() {
-        return [...menuItems];
-    }
+    function getProducts() { return [...menuItems]; }
 
-    /** Returns a single menu item by numeric id or SKU string. */
     function getProductById(id) {
         return menuItems.find(i => i.id === id || i.sku === id) || null;
     }
 
-    /** Returns menu items belonging to a given category. */
     function getProductsByCategory(category) {
         return menuItems.filter(i => i.category === category);
     }
 
-    /** Returns menu items that are Low Stock or Out of Stock. */
     function getLowStockProducts() {
         return menuItems.filter(i => i.stockStatus !== 'In Stock');
     }
 
-    /**
-     * Returns aggregate statistics. Pass a pre-filtered list (e.g. from
-     * applyFilters()) to get stats scoped to the current view; omit it
-     * to summarize the entire menu.
-     */
     function getStockStatistics(list) {
         const source = list || menuItems;
         const total = source.length;
@@ -163,31 +109,15 @@ const dataManager = (function () {
             ? +(source.reduce((sum, i) => sum + i.unitPrice, 0) / total).toFixed(2)
             : 0;
 
-        return {
-            totalProducts: total,
-            totalValue: +totalValue.toFixed(2),
-            inStock,
-            lowStock,
-            outOfStock,
-            averagePrice: avgPrice
-        };
+        return { totalProducts: total, totalValue: +totalValue.toFixed(2), inStock, lowStock, outOfStock, averagePrice: avgPrice };
     }
 
-    /**
-     * Returns per-category totals (quantity, value, item count).
-     * Pass a pre-filtered list to scope the summary to the current view.
-     */
     function getCategorySummary(list) {
         const source = list || menuItems;
         const map = {};
         source.forEach(i => {
             if (!map[i.category]) {
-                map[i.category] = {
-                    category: i.category,
-                    totalQuantity: 0,
-                    totalValue: 0,
-                    count: 0
-                };
+                map[i.category] = { category: i.category, totalQuantity: 0, totalValue: 0, count: 0 };
             }
             map[i.category].totalQuantity += i.quantity;
             map[i.category].totalValue += i.totalValue;
@@ -196,14 +126,9 @@ const dataManager = (function () {
         return Object.values(map).map(c => ({ ...c, totalValue: +c.totalValue.toFixed(2) }));
     }
 
-    /** Returns the distinct list of categories present in the data. */
     function getCategories() {
         return [...new Set(menuItems.map(i => i.category))];
     }
-
-    // ---------------------------------------------------------------
-    // Step 2: Filtering & search
-    // ---------------------------------------------------------------
 
     function filterByCategory(category) {
         activeFilters.category = category;
@@ -221,24 +146,50 @@ const dataManager = (function () {
         return applyFilters();
     }
 
-    /** Applies every active filter + the search query together. */
     function applyFilters() {
-        return menuItems.filter(i => {
+        const filtered = menuItems.filter(i => {
             const matchCategory = activeFilters.category === 'all' || i.category === activeFilters.category;
             const matchStatus = activeFilters.stockStatus === 'all' || i.stockStatus === activeFilters.stockStatus;
             const matchMin = activeFilters.priceMin == null || i.unitPrice >= activeFilters.priceMin;
             const matchMax = activeFilters.priceMax == null || i.unitPrice <= activeFilters.priceMax;
             const q = activeFilters.searchQuery.trim().toLowerCase();
-            const matchSearch = !q ||
-                i.name.toLowerCase().includes(q) ||
-                i.sku.toLowerCase().includes(q);
+            const matchSearch = !q || i.name.toLowerCase().includes(q) || i.sku.toLowerCase().includes(q);
             return matchCategory && matchStatus && matchMin && matchMax && matchSearch;
+        });
+        return sortArray(filtered);
+    }
+
+    function sortArray(arr) {
+        if (activeFilters.sortField === 'default') return arr;
+        const field = activeFilters.sortField;
+        const dir = activeFilters.sortDirection === 'desc' ? -1 : 1;
+
+        return [...arr].sort((a, b) => {
+            let valA, valB;
+            if (field === 'name') { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
+            else if (field === 'price') { valA = a.unitPrice; valB = b.unitPrice; }
+            else if (field === 'quantity') { valA = a.quantity; valB = b.quantity; }
+            else if (field === 'value') { valA = a.totalValue; valB = b.totalValue; }
+            else return 0;
+
+            if (valA < valB) return -1 * dir;
+            if (valA > valB) return 1 * dir;
+            return 0;
         });
     }
 
     function resetFilters() {
-        activeFilters = { category: 'all', stockStatus: 'all', priceMin: null, priceMax: null, searchQuery: '' };
+        activeFilters = {
+            category: 'all', stockStatus: 'all', priceMin: null, priceMax: null,
+            searchQuery: '', sortField: 'default', sortDirection: 'asc'
+        };
         return getProducts();
+    }
+
+    function sortProducts(field, direction) {
+        activeFilters.sortField = field || 'default';
+        activeFilters.sortDirection = direction || 'asc';
+        return applyFilters();
     }
 
     function searchProducts(query) {
@@ -246,40 +197,23 @@ const dataManager = (function () {
         return applyFilters();
     }
 
-    /** Convenience alias matching the spec's naming for the search handler. */
     function updateSearchResults(query) {
         return searchProducts(query);
     }
 
-    function getActiveFilters() {
-        return { ...activeFilters };
-    }
+    function getActiveFilters() { return { ...activeFilters }; }
 
-    // ---------------------------------------------------------------
-    // Step 3: CSV export
-    // ---------------------------------------------------------------
-
-    /** Converts a list of menu item records into a CSV string. */
     function exportToCSV(data) {
         const rows = (data && data.length) ? data : menuItems;
         const headers = ['SKU', 'Name', 'Category', 'Quantity', 'Unit Price', 'Total Value', 'Status'];
-
         const escape = (val) => `"${String(val).replace(/"/g, '""')}"`;
-
         const lines = rows.map(i => [
-            i.sku,
-            escape(i.name),
-            escape(i.category),
-            i.quantity,
-            i.unitPrice.toFixed(2),
-            i.totalValue.toFixed(2),
-            i.stockStatus
+            i.sku, escape(i.name), escape(i.category),
+            i.quantity, i.unitPrice.toFixed(2), i.totalValue.toFixed(2), i.stockStatus
         ].join(','));
-
         return [headers.join(','), ...lines].join('\r\n');
     }
 
-    /** Triggers a browser download of the given CSV content. */
     function downloadCSV(csvContent, filename) {
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
@@ -293,16 +227,6 @@ const dataManager = (function () {
         URL.revokeObjectURL(url);
     }
 
-    // ---------------------------------------------------------------
-    // Real-time simulation hook (wired up by app.js in Part 5)
-    // ---------------------------------------------------------------
-
-    /**
-     * Sends the updated quantity to api.php so the change is saved to
-     * data/menu_items.json, not just kept in memory. Fire-and-forget:
-     * if api.php isn't running (no XAMPP/Apache), this silently fails
-     * and the dashboard keeps working from the in-memory copy only.
-     */
     function pushUpdateToApi(item) {
         fetch(`api.php?action=update&id=${encodeURIComponent(item.sku)}`, {
             method: 'POST',
@@ -313,7 +237,6 @@ const dataManager = (function () {
         });
     }
 
-    /** Updates stock through the PHP API and syncs the local state with the server response. */
     function updateProductStock(sku, quantity) {
         const numericQuantity = Number(quantity);
         if (!Number.isInteger(numericQuantity) || numericQuantity < 0) {
@@ -337,11 +260,10 @@ const dataManager = (function () {
         });
     }
 
-    /** Nudges one random menu item's quantity to mimic a live data feed, and persists it. */
     function simulateUpdate() {
         if (!menuItems.length) return null;
         const idx = Math.floor(Math.random() * menuItems.length);
-        const delta = Math.floor(Math.random() * 11) - 5; // -5 to +5
+        const delta = Math.floor(Math.random() * 11) - 5;
         let newQty = menuItems[idx].quantity + delta;
         newQty = Math.max(0, newQty);
         menuItems[idx] = withComputed({ ...menuItems[idx], quantity: newQty });
@@ -349,9 +271,6 @@ const dataManager = (function () {
         return menuItems[idx];
     }
 
-    // ---------------------------------------------------------------
-    // Public API
-    // ---------------------------------------------------------------
     return {
         initializeData,
         getProducts,
@@ -366,6 +285,7 @@ const dataManager = (function () {
         filterByPriceRange,
         applyFilters,
         resetFilters,
+        sortProducts,
         searchProducts,
         updateSearchResults,
         getActiveFilters,

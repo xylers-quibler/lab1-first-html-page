@@ -3,13 +3,12 @@
  * ------------------------------------------------------------------
  * DOM handlers for the Restaurant Manager Dashboard (Lab 4, Part 5).
  * Wires dataManager (state) and dashboardCharts (visualization) to
- * the actual page: filter controls, live search, low-stock alerts,
- * CSV export, and a simulated real-time feed.
+ * the actual page: filter controls, sort, live search, low-stock
+ * alerts, CSV export, and a simulated real-time feed.
  * ------------------------------------------------------------------
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Guard: only run on pages that actually have the inventory section.
     const tableBody = document.getElementById('menuTableBody');
     if (!tableBody || typeof dataManager === 'undefined') return;
 
@@ -18,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusFilter: document.getElementById('statusFilter'),
         priceMin: document.getElementById('priceMinInput'),
         priceMax: document.getElementById('priceMaxInput'),
+        sortSelect: document.getElementById('sortSelect'),
         applyBtn: document.getElementById('applyFiltersBtn'),
         resetBtn: document.getElementById('resetFiltersBtn'),
         searchInput: document.getElementById('searchInput'),
@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuery = '';
 
-    // ---- Boot -----------------------------------------------------
     renderLoadingRow();
 
     dataManager.initializeData().then(() => {
@@ -53,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Dashboard initialization failed:', error);
         addActivity('Unable to initialize inventory data.', 'danger');
     });
-
-    // ---- Setup ------------------------------------------------------
 
     function populateCategoryDropdown() {
         dataManager.getCategories().forEach(cat => {
@@ -87,11 +84,24 @@ document.addEventListener('DOMContentLoaded', () => {
         els.priceMin.addEventListener('input', handlePriceChange);
         els.priceMax.addEventListener('input', handlePriceChange);
 
+        els.sortSelect.addEventListener('change', (e) => {
+            const [field, direction] = e.target.value.split('-');
+            if (field === 'default') {
+                dataManager.sortProducts('default', 'asc');
+            } else {
+                dataManager.sortProducts(field, direction);
+            }
+            refreshView();
+            showToast('Sort applied', `Sorted by ${e.target.options[e.target.selectedIndex].text}.`, 'info');
+        });
+
         els.applyBtn.addEventListener('click', () => {
             dataManager.filterByCategory(els.categoryFilter.value);
             dataManager.filterByStockStatus(els.statusFilter.value);
             dataManager.filterByPriceRange(els.priceMin.value, els.priceMax.value);
             dataManager.updateSearchResults(currentQuery);
+            const [field, direction] = els.sortSelect.value.split('-');
+            dataManager.sortProducts(field === 'default' ? 'default' : field, direction);
             refreshView();
             showToast('Filters applied', 'Inventory view updated.', 'success');
         });
@@ -104,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             els.priceMin.value = '';
             els.priceMax.value = '';
             els.searchInput.value = '';
+            els.sortSelect.value = 'default';
             refreshView();
         });
 
@@ -131,12 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---- Rendering --------------------------------------------------
-
     function renderLoadingRow() {
-        els.tableBody.innerHTML = `
-            <tr><td colspan="8" class="text-center text-muted py-4">Loading menu inventory...</td></tr>
-        `;
+        els.tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">Loading menu inventory...</td></tr>`;
     }
 
     function statusBadgeClass(status) {
@@ -155,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-    /** Wraps the matching substring of `text` in <mark> for live search highlighting. */
     function highlight(text, query) {
         const safe = escapeHtml(text);
         if (!query) return safe;
@@ -163,21 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return safe.replace(re, '<mark>$1</mark>');
     }
 
-    /**
-     * Rebuilds the menu item table body from scratch using DOM methods:
-     * innerHTML reset (removeChild-equivalent clear), then createElement
-     * + appendChild per row. Kept as explicit DOM construction (rather
-     * than one big innerHTML string) so individual rows can carry
-     * data attributes and per-row classes for the low-stock highlight
-     * and the real-time "flash" animation.
-     */
     function renderTable(list, query) {
         els.tableBody.innerHTML = '';
 
         if (!list.length) {
             const emptyRow = document.createElement('tr');
             const cell = document.createElement('td');
-            cell.colSpan = 7;
+            cell.colSpan = 8;
             cell.className = 'text-center text-muted py-4';
             cell.textContent = 'No menu items match the current filters.';
             emptyRow.appendChild(cell);
@@ -254,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /** Low-stock banner always reflects the whole menu, not just the current filter. */
     function updateLowStockAlert() {
         const lowStock = dataManager.getLowStockProducts();
         if (lowStock.length === 0) {
@@ -267,7 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
         els.alertBox.classList.remove('d-none');
     }
 
-    /** Re-pulls the filtered list from dataManager and repaints table + alert + charts. */
     function refreshView() {
         const filtered = dataManager.applyFilters();
         renderTable(filtered, currentQuery);
@@ -277,8 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dashboardCharts.renderAll(filtered);
         }
     }
-
-    // ---- Notifications ------------------------------------------------
 
     function showToast(title, message, variant = 'primary') {
         if (!els.toastContainer || typeof bootstrap === 'undefined') return;
@@ -300,8 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
     }
 
-    // ---- Part 5 Step 5: simulated real-time updates ---------------------
-
     function startRealtimeSimulation() {
         setInterval(() => {
             const before = dataManager.getProducts();
@@ -321,11 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => row.classList.remove('row-flash'), 1200);
             }
 
-            showToast(
-                'Live update',
-                `${updated.name} stock changed to ${updated.quantity} (${updated.stockStatus}).`,
-                'info'
-            );
-        }, 8000); // every 8 seconds
+            showToast('Live update', `${updated.name} stock changed to ${updated.quantity} (${updated.stockStatus}).`, 'info');
+        }, 8000);
     }
 });

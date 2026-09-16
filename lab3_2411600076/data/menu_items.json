@@ -4,7 +4,7 @@
         "sku": "APP-001",
         "name": "Spring Rolls",
         "category": "Appetizer",
-        "quantity": 3,
+        "quantity": 39,
         "unitPrice": 120
     },
     {
@@ -12,7 +12,7 @@
         "sku": "APP-002",
         "name": "Calamari",
         "category": "Appetizer",
-        "quantity": 12,
+        "quantity": 0,
         "unitPrice": 180
     },
     {
@@ -20,7 +20,7 @@
         "sku": "APP-003",
         "name": "Garlic Bread",
         "category": "Appetizer",
-        "quantity": 30,
+        "quantity": 42,
         "unitPrice": 90
     },
     {
@@ -28,7 +28,7 @@
         "sku": "MAIN-001",
         "name": "Grilled Salmon",
         "category": "Main Course",
-        "quantity": 7,
+        "quantity": 17,
         "unitPrice": 450
     },
     {
@@ -36,7 +36,7 @@
         "sku": "MAIN-002",
         "name": "Beef Steak",
         "category": "Main Course",
-        "quantity": 16,
+        "quantity": 0,
         "unitPrice": 520
     },
     {
@@ -44,7 +44,7 @@
         "sku": "MAIN-003",
         "name": "Chicken Alfredo",
         "category": "Main Course",
-        "quantity": 34,
+        "quantity": 17,
         "unitPrice": 280
     },
     {
@@ -52,7 +52,7 @@
         "sku": "MAIN-004",
         "name": "Margherita Pizza",
         "category": "Main Course",
-        "quantity": 47,
+        "quantity": 45,
         "unitPrice": 320
     },
     {
@@ -68,7 +68,7 @@
         "sku": "DES-002",
         "name": "Cheesecake",
         "category": "Dessert",
-        "quantity": 28,
+        "quantity": 22,
         "unitPrice": 160
     },
     {
@@ -76,7 +76,7 @@
         "sku": "DES-003",
         "name": "Ice Cream Sundae",
         "category": "Dessert",
-        "quantity": 11,
+        "quantity": 9,
         "unitPrice": 110
     },
     {
@@ -84,7 +84,7 @@
         "sku": "BEV-001",
         "name": "Iced Tea",
         "category": "Beverage",
-        "quantity": 55,
+        "quantity": 53,
         "unitPrice": 60
     },
     {
@@ -92,7 +92,7 @@
         "sku": "BEV-002",
         "name": "Fresh Lemonade",
         "category": "Beverage",
-        "quantity": 13,
+        "quantity": 18,
         "unitPrice": 70
     },
     {
@@ -108,7 +108,7 @@
         "sku": "BEV-004",
         "name": "House Wine",
         "category": "Beverage",
-        "quantity": 19,
+        "quantity": 25,
         "unitPrice": 220
     }
 ]
