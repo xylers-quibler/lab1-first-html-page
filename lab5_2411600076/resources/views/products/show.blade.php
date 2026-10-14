@@ -26,7 +26,45 @@
 
     <div class="mt-3">
         <a href="{{ route('products.edit', $product) }}" class="btn btn-primary">Edit</a>
+        <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger" onclick="return confirm('Delete this menu item?')">Delete</button>
+        </form>
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
+    </div>
+
+    {{-- Related inventory transactions (stock in / stock out history) --}}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">Inventory Transactions</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Date</th><th>Type</th><th>Quantity</th><th>Reference</th><th>User</th></tr>
+                    </thead>
+                    <tbody>
+                        @forelse($transactions as $transaction)
+                        <tr>
+                            <td>{{ $transaction->created_at->format('M d, Y h:i A') }}</td>
+                            <td>
+                                <span class="badge bg-{{ $transaction->transaction_type == 'Stock In' ? 'success' : 'warning' }}">
+                                    {{ $transaction->transaction_type }}
+                                </span>
+                            </td>
+                            <td>{{ $transaction->quantity }}</td>
+                            <td>{{ $transaction->reference ?? 'N/A' }}</td>
+                            <td>{{ $transaction->user->name ?? 'N/A' }}</td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="5" class="text-center">No transactions yet.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

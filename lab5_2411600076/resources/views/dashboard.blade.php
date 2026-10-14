@@ -119,11 +119,12 @@
 {{-- Chart.js + Config --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const C_PRIMARY = '#202940';
-    const C_SECONDARY = '#4B4038';
-    const C_SUCCESS = '#28a745';
-    const C_WARNING = '#f3a712';
-    const C_DANGER = '#dc3545';
+    // Color palette: Stone & Sage (same as public/css/style.css and Lab 4)
+    const C_PRIMARY = '#6B8F71';   // Sage
+    const C_SECONDARY = '#C9A66B'; // Muted Gold
+    const C_SUCCESS = '#6B8F71';   // Sage - In Stock
+    const C_WARNING = '#C9A66B';   // Muted Gold - Low Stock
+    const C_DANGER = '#2F3437';    // Charcoal - Out of Stock
 
     // Chart 1: Inventory Value by Category
     new Chart(document.getElementById('categoryChart'), {

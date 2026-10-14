@@ -10,7 +10,7 @@
 <body class="login-page d-flex justify-content-center align-items-center min-vh-100">
     <div class="card login-card shadow-lg" style="max-width: 400px; width: 100%;">
         <div class="card-header text-center py-4">
-            <h2 class="mb-0 text-white">🍽️ Restaurant Manager</h2>
+            <h2 class="mb-0 text-white">Restaurant Manager</h2>
             <p class="mb-0 small text-white-50">Login to your dashboard</p>
         </div>
         <div class="card-body p-4">

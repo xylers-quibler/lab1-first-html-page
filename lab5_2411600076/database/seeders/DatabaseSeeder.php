@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Add the sample menu items (Part 8, Step 3: Run the Seeder)
+        $this->call(ProductSeeder::class);
     }
 }
