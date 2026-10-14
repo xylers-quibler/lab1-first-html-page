@@ -356,3 +356,16 @@ main .border-bottom {
         font-size: 0.85rem;
     }
 }
+
+/* ===== LAB 6: NOTIFICATION BELL ===== */
+.notification-menu {
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* ===== LAB 6: LIVE DASHBOARD STATUS ===== */
+.live-status {
+    border-left: 5px solid var(--sage) !important;
+    font-size: 1rem;
+}

@@ -9,10 +9,6 @@
         <a href="{{ route('products.create') }}" class="btn btn-primary">+ Add Menu Item</a>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
@@ -34,8 +30,8 @@
                             <td>₱{{ number_format($product->unit_price, 2) }}</td>
                             <td>₱{{ number_format($product->total_value, 2) }}</td>
                             <td>
-                                <span class="badge bg-{{ $product->isOutOfStock() ? 'danger' : ($product->isLowStock() ? 'warning' : 'success') }}">
-                                    {{ $product->status }}
+                                <span class="badge bg-{{ $product->stock_status_color }}">
+                                    {{ $product->stock_status }}
                                 </span>
                             </td>
                             <td>

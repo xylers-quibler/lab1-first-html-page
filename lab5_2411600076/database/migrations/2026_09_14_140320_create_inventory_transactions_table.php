@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('inventory_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->string('transaction_type'); // 'Stock In' or 'Stock Out'
+            $table->string('transaction_type'); // 'Stock In', 'Stock Out' or 'Adjustment'
             $table->integer('quantity');
             $table->string('reference')->nullable(); // PO number, etc.
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
